@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 * {
     margin: 0;
     padding: 0;
@@ -174,4 +175,182 @@ img{
     user-select: none;
     caret-color: transparent;
     pointer-events: none;
+=======
+* {
+    margin: 0;
+    padding: 0;
+}
+
+canvas{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.ratio{
+    font-family: 'Courier New', Courier, monospace;
+    color: lime;
+    font-weight: 600;
+    font-size: 1.5rem;
+    text-shadow: #000 0px 0px 1px,#000 0px 0px 1px,#000 0px 0px 1px;
+    position: absolute;
+    z-index: 2;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 50%;
+    text-align: center;
+    user-select: none;
+    caret-color: transparent;
+    pointer-events: none;
+}
+
+img{
+    display: none;
+}
+
+@keyframes flashcorrect {
+    0% {
+        color: rgb(30, 255, 30);
+        opacity:1;
+        box-shadow: 0 0 109px 88px rgba(0,255,0,0.75);
+    }
+    52% {
+        color: rgb(7, 54, 13);
+        box-shadow: 0 0 109px -13px rgba(0,255,0,0.75);
+    }
+}
+   
+.flashcorrect {
+    animation-name: flashcorrect;
+    animation-duration: 1500ms;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in-out;
+}  
+
+@keyframes flashwrong {
+    0% {
+        color: #dc143c;
+        opacity:1;
+        box-shadow: 0 0 109px 88px rgba(255,0,0,0.75);
+    }
+    77% {
+        color: #430101;
+        box-shadow: 0 0 109px -13px rgba(255,0,0,0.75);
+    }
+}
+
+.flashwrong {
+    animation-name: flashwrong;
+    animation-duration: 900ms;
+    animation-iteration-count: 0.5;
+    animation-timing-function: ease-in-out;
+}  
+
+.submit-button{
+    font-family: 'Courier New', Courier, monospace;
+    flex-grow: 1;
+    font-size: 2rem;
+    box-shadow: inset 0px,0px,20px,5px,black;
+    position:absolute;
+    display:flex;
+    /*flex: 1 2 auto;*/
+    max-width: 50%;
+    /*flex-direction: row;*/
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    top:75%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    caret-color: transparent;
+    z-index: 10;
+    transition: 0.5s linear;
+}
+
+
+
+#submit{
+    color:white;
+    background-color: aqua;
+    font-size: 2rem;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight:600;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: inset 0px 0px 20px 5px black;
+    text-shadow: #000 0px 0px 1px,#000 0px 0px 1px,#000 0px 0px 1px,#000 0px 0px 1px;
+    cursor: pointer;
+    z-index: 11;
+    user-select: none;
+}
+
+#submit:hover{
+    background-color: gray;
+    transition: 0.2s linear;
+}
+
+.message{
+    color: yellow;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-shadow: 2px 2px 2px #CE5937, #000 0px 0px 1px;
+    position: absolute;
+    top: 68%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    text-align: center;
+    user-select: none;
+    caret-color: transparent;
+    pointer-events: none;
+}
+
+.score{
+    position: absolute;
+    color: white;
+    font-size: 2rem;
+    top:85%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    vertical-align: middle;
+    border-style: solid;
+    border-color: white;
+    border-radius: 4px;
+    width: 70%;
+    background-image: linear-gradient(to right, red , yellow);
+    user-select: none;
+    caret-color: transparent;
+    pointer-events: none;
+    padding: 5px;
+}
+
+#test-planet-label{
+    position: absolute;
+    color: white;
+    font-weight: 400;
+    text-shadow: #000 0px 0px 1px,#000 0px 0px 1px,#000 0px 0px 1px,#000 0px 0px 1px;
+    top: 50%;
+    left: 62.5%;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.5rem;
+    transform: translate(-50%,-50%);
+    user-select: none;
+    caret-color: transparent;
+    pointer-events: none;
+}
+
+#base-planet-label{
+    position: absolute;
+    color: white;
+    font-weight: 400;
+    text-shadow: #000 0px 0px 1px,#000 0px 0px 1px,#000 0px 0px 1px,#000 0px 0px 1px;
+    top: 50%;
+    left: 37.5%;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.5rem;
+    transform: translate(-50%,-50%);
+    user-select: none;
+    caret-color: transparent;
+    pointer-events: none;
+>>>>>>> sdfsdf
 }
