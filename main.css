@@ -1,12 +1,14 @@
 * {
     margin: 0;
     padding: 0;
+    overflow: hidden;
 }
 
 canvas{
     position: absolute;
     top: 0;
     left: 0;
+    overflow: hidden;
 }
 
 .ratio{
@@ -17,7 +19,7 @@ canvas{
     text-shadow: #000 0px 0px 1px,#000 0px 0px 1px,#000 0px 0px 1px;
     position: absolute;
     z-index: 2;
-    top: 20%;
+    top: 10%;
     left: 50%;
     transform: translate(-50%,-50%);
     width: 50%;
@@ -73,12 +75,10 @@ img{
     font-family: 'Courier New', Courier, monospace;
     flex-grow: 1;
     font-size: 2rem;
-    box-shadow: inset 0px,0px,20px,5px,black;
+    box-shadow: inset 0px,0px,17px,10px,black;
     position:absolute;
     display:flex;
-    /*flex: 1 2 auto;*/
     max-width: 50%;
-    /*flex-direction: row;*/
     flex-wrap: wrap;
     gap: 10px;
     justify-content: center;
@@ -91,8 +91,6 @@ img{
     transition: 0.5s linear;
 }
 
-
-
 #submit{
     color:white;
     background-color: aqua;
@@ -101,7 +99,7 @@ img{
     font-weight:600;
     border-radius: 8px;
     padding: 10px;
-    box-shadow: inset 0px 0px 20px 5px black;
+    box-shadow: inset 0px 0px 17px 2px black, 0px 0px 10px 2px rgba(255,255,255,0.75);
     text-shadow: #000 0px 0px 1px,#000 0px 0px 1px,#000 0px 0px 1px,#000 0px 0px 1px;
     cursor: pointer;
     z-index: 11;
@@ -118,7 +116,7 @@ img{
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     text-shadow: 2px 2px 2px #CE5937, #000 0px 0px 1px;
     position: absolute;
-    top: 68%;
+    top: 63%;
     left: 50%;
     transform: translate(-50%,-50%);
     text-align: center;
@@ -129,7 +127,8 @@ img{
 
 .score{
     position: absolute;
-    color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: black;
     font-size: 2rem;
     top:85%;
     left:50%;
@@ -139,7 +138,7 @@ img{
     border-color: white;
     border-radius: 4px;
     width: 70%;
-    background-image: linear-gradient(to right, red , yellow);
+    background-image: linear-gradient(to right, skyblue , #22bd75);
     user-select: none;
     caret-color: transparent;
     pointer-events: none;
@@ -148,10 +147,10 @@ img{
 
 #test-planet-label{
     position: absolute;
-    color: white;
-    font-weight: 400;
-    text-shadow: #000 0px 0px 1px,#000 0px 0px 1px,#000 0px 0px 1px,#000 0px 0px 1px;
-    top: 50%;
+    color: black;
+    font-weight: 600;
+    text-shadow: #FFFFFF 0px 0px 1px,#FFFFFF 0px 0px 1px,#FFFFFF 0px 0px 1px,#FFFFFF 0px 0px 1px;
+    top: 45%;
     left: 62.5%;
     font-family: 'Courier New', Courier, monospace;
     font-size: 1.5rem;
@@ -163,10 +162,10 @@ img{
 
 #base-planet-label{
     position: absolute;
-    color: white;
-    font-weight: 400;
-    text-shadow: #000 0px 0px 1px,#000 0px 0px 1px,#000 0px 0px 1px,#000 0px 0px 1px;
-    top: 50%;
+    color: black;
+    font-weight: 600;
+    text-shadow: #FFFFFF 0px 0px 1px,#FFFFFF 0px 0px 1px,#FFFFFF 0px 0px 1px,#FFFFFF 0px 0px 1px;
+    top: 45%;
     left: 37.5%;
     font-family: 'Courier New', Courier, monospace;
     font-size: 1.5rem;

@@ -89,7 +89,7 @@ class Point {
     }
 }
 
-var center = new Point(canvas.width/2,canvas.height/2);
+var center = new Point(canvas.clientWidth/2,2*canvas.clientHeight/5);
 
 function drawTestPlanet(rad,color){
     ctx.moveTo(center.x/2,center.y);
@@ -198,7 +198,12 @@ function startGame(){
             baseRadius = Math.floor(Math.random()*80+80); 
         }
         else{
-            baseRadius = Math.floor(Math.random()*30+30);
+            if(planet[0]=="Mercury"||planet[0]=="Mars"){
+                baseRadius = Math.floor(Math.random()*15+15);
+            }
+            else{
+                baseRadius = Math.floor(Math.random()*30+30);
+            }
         }
     }
     else{
@@ -231,7 +236,7 @@ window.addEventListener('resize', function() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     center.x = canvas.width/2;
-    center.y = canvas.height/2;
+    center.y = 2*canvas.height/5;
     bumpGame(testRadius);
 }, true);
 
