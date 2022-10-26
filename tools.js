@@ -245,30 +245,10 @@ var incorrectArray = [];
 
 var lastClick = 0;
 
-function loadArrays() {
-    correctArray.push(new Audio("correct1.mp3"));
-    correctArray.push(new Audio("correct2.mp3"));       
-    correctArray.push(new Audio("correct3.mp3"));       
-    correctArray.push(new Audio("correct4.mp3"));       
-    correctArray.push(new Audio("correct5.mp3"));       
-    correctArray.push(new Audio("correct6.mp3"));       
-    correctArray.push(new Audio("correct7.mp3"));       
+function loadArrays() {   
     correctArray.push(new Audio("correct8.mp3"));                        
     incorrectArray.push(new Audio("incorrect.mp3"));
-    incorrectArray.push(new Audio("incorrect1.mp3"));  
-    incorrectArray.push(new Audio("incorrect2.mp3"));   
-    incorrectArray.push(new Audio("incorrect4.mp3"));  
-    incorrectArray.push(new Audio("incorrect5.mp3"));   
-    incorrectArray.push(new Audio("incorrect7.mp3"));  
-    incorrectArray.push(new Audio("incorrect8.mp3"));  
-    incorrectArray.push(new Audio("incorrect9.mp3"));  
-    incorrectArray.push(new Audio("incorrect10.mp3"));  
-    incorrectArray.push(new Audio("incorrect11.mp3"));  
-    incorrectArray.push(new Audio("incorrect12.mp3"));
-    incorrectArray.push(new Audio("incorrect13.mp3"));  
-    incorrectArray.push(new Audio("incorrect14.mp3"));  
-    incorrectArray.push(new Audio("incorrect15.mp3"));  
-    incorrectArray.push(new Audio("incorrect16.mp3"));    
+    incorrectArray.push(new Audio("incorrect13.mp3"));      
 }
 loadArrays();
 
@@ -319,4 +299,19 @@ function addListenForClear(){
 
 function delay(time) {
     return new Promise(resolve => setTimeout(resolve, time));
+}
+
+document.onkeydown = checkKey;
+
+function checkKey(e) {
+
+    e = e || window.event;
+
+    if (e.keyCode == '38') {
+        bumpGame(testRadius+=0.1);
+    }
+    else if (e.keyCode == '40') {
+        bumpGame(testRadius-=0.1);
+    }
+
 }
