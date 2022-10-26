@@ -168,6 +168,10 @@ document.getElementById("space").addEventListener("wheel",function changePlanet(
         if(event.deltaY>0){bumpGame(testRadius+=2);}
         else if(event.deltaY<0){bumpGame(testRadius-=2);}
     }
+    updateRatio();
+});
+
+function updateRatio(){
     ratio = testRadius/baseRadius;
     if(ratio>1){
         document.getElementById("ratio").innerHTML = testPlanet[0] + " is " + ratio.toFixed(2) + " times bigger than " + planet[0] + "?";
@@ -178,7 +182,7 @@ document.getElementById("space").addEventListener("wheel",function changePlanet(
     else if(ratio < 1){
         document.getElementById("ratio").innerHTML = testPlanet[0] + " is " + ratio.toFixed(2) + " times smaller than " + planet[0] + "?";
     }
-});
+}
 
 var planet;
 var testPlanet;
@@ -309,9 +313,11 @@ function checkKey(e) {
 
     if (e.keyCode == '38') {
         bumpGame(testRadius+=0.1);
+        updateRatio();
     }
     else if (e.keyCode == '40') {
         bumpGame(testRadius-=0.1);
+        updateRatio();
     }
 
 }
