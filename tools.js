@@ -258,25 +258,35 @@ loadArrays();
 
 function score(){
     console.log(ratio.toFixed(2) + "test ratio and " + trueRatio.toFixed(2)+ " actual ratio");
+    var testRatio = ratio.toFixed(2);
+    var realRatio = trueRatio.toFixed(2);
     var d = new Date();
     var t = d.getTime();
+    console.log(trueRatio + " true ratio" + testRatio + " testRatio" + (parseFloat(trueRatio) + 0.02) + " plus 0.02");
     if(t-lastClick>1000){
-        if (ratio.toFixed(2)==trueRatio.toFixed(2) ){
+        if (testRatio==realRatio){
                 //document.getElementById("message").innerHTML = "Correct in " + tries + " tries.";
                 document.getElementById("submit").classList.add("flashcorrect");
-                //tries = 1;
+                document.getElementById("message").innerHTML = "Good job!  Next round";
                 var rightSound = Math.floor(Math.random()*correctArray.length);
                 correctArray[rightSound].currentTime = 0;
                 correctArray[rightSound].play();
-                //stars++;
-                document.getElementById("stars").innerHTML += "&#9733";
-                delay(correctArray[rightSound].duration*1000).then(() => startGame());
+                delay(correctArray[rightSound].duration*1000).then(() => {
+                    document.getElementById("stars").innerHTML += "&#9733";
+                    startGame()
+                });
                 console.log(correctArray[rightSound].duration+ " duration");                
         }
-        else {
-            //tries++;
-            //refreshCount++;
-            //document.getElementById("message").innerHTML = "WRONG.";
+        
+        else if(testRatio<=(parseFloat(realRatio)+0.02)&&(testRatio>=(parseFloat(realRatio)-0.02))){
+            document.getElementById("message").innerHTML = "Close.  Check your rounding.";
+            var wrongSound = Math.floor(Math.random()*incorrectArray.length);
+            incorrectArray[wrongSound].currentTime = 0;
+            incorrectArray[wrongSound].play();
+            document.getElementById("submit").classList.add("flashwrong");
+        }
+        else{
+            document.getElementById("message").innerHTML = "Try again.  Use Shift to smooth out your scaling.  You may also use the arrow keys.";
             var wrongSound = Math.floor(Math.random()*incorrectArray.length);
             incorrectArray[wrongSound].currentTime = 0;
             incorrectArray[wrongSound].play();
