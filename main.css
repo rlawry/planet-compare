@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
+    overscroll-behavior-x: none;
 }
 
 canvas{
@@ -9,6 +10,7 @@ canvas{
     top: 0;
     left: 0;
     overflow: hidden;
+    z-index: 0;
 }
 
 .ratio{
@@ -30,7 +32,11 @@ canvas{
 }
 
 img{
-    display: none;
+    position:absolute;
+    top: 5%;
+    left: 5%;
+    width: 3%;
+    height: auto;
 }
 
 @keyframes flashcorrect {
@@ -175,6 +181,7 @@ img{
     pointer-events: none;
 }
 
+<<<<<<< HEAD
 .container{
     font-size: 2rem;
     font-family: Arial;
@@ -216,3 +223,8 @@ input.scale-check {
 }
 
 input { position: fixed; top: 10px; left: 10px; color: white; width: 340px }
+=======
+#question-mark{
+    z-index:5;
+}
+>>>>>>> 713984f53d97fc18ab068f43e18a9cea0da9c8b6

@@ -156,8 +156,18 @@ document.getElementById("space").addEventListener("wheel",function changePlanet(
     else if(Math.abs(startYRad-startXRad)<0.5){
         selector = 0;
     }
+<<<<<<< HEAD
     else if(Math.abs(startYRad-startXRad)<8){
         selector = 1;
+=======
+    updateRatio();
+});
+
+function updateRatio(){
+    ratio = testRadius/baseRadius;
+    if(ratio>1){
+        document.getElementById("ratio").innerHTML = testPlanet[0] + " is " + ratio.toFixed(2) + " times bigger than " + planet[0] + "?";
+>>>>>>> 713984f53d97fc18ab068f43e18a9cea0da9c8b6
     }
     else{
         selector = 2;
@@ -186,7 +196,7 @@ document.getElementById("space").addEventListener("wheel",function changePlanet(
             bumpGame(0,-1*smooth[selector]);
         }
     }
-});
+}
 
 var planet;
 var testPlanet;
@@ -210,33 +220,14 @@ var incorrectArray = [];
 
 var lastClick = 0;
 
-function loadArrays() {
-    correctArray.push(new Audio("correct1.mp3"));
-    correctArray.push(new Audio("correct2.mp3"));       
-    correctArray.push(new Audio("correct3.mp3"));       
-    correctArray.push(new Audio("correct4.mp3"));       
-    correctArray.push(new Audio("correct5.mp3"));       
-    correctArray.push(new Audio("correct6.mp3"));       
-    correctArray.push(new Audio("correct7.mp3"));       
+function loadArrays() {   
     correctArray.push(new Audio("correct8.mp3"));                        
     incorrectArray.push(new Audio("incorrect.mp3"));
-    incorrectArray.push(new Audio("incorrect1.mp3"));  
-    incorrectArray.push(new Audio("incorrect2.mp3"));   
-    incorrectArray.push(new Audio("incorrect4.mp3"));  
-    incorrectArray.push(new Audio("incorrect5.mp3"));   
-    incorrectArray.push(new Audio("incorrect7.mp3"));  
-    incorrectArray.push(new Audio("incorrect8.mp3"));  
-    incorrectArray.push(new Audio("incorrect9.mp3"));  
-    incorrectArray.push(new Audio("incorrect10.mp3"));  
-    incorrectArray.push(new Audio("incorrect11.mp3"));  
-    incorrectArray.push(new Audio("incorrect12.mp3"));
-    incorrectArray.push(new Audio("incorrect13.mp3"));  
-    incorrectArray.push(new Audio("incorrect14.mp3"));  
-    incorrectArray.push(new Audio("incorrect15.mp3"));  
-    incorrectArray.push(new Audio("incorrect16.mp3"));    
+    incorrectArray.push(new Audio("incorrect13.mp3"));      
 }
 loadArrays();
 
+<<<<<<< HEAD
 document.getElementById("show-empty").addEventListener("click", function(){
     checkState = !checkState;
     bumpGame(0,0);
@@ -245,6 +236,46 @@ document.getElementById("show-empty").addEventListener("click", function(){
 // document.addEventListener("DOMContentLoaded", function(){
 //     addListenForClear();
 // });
+=======
+function score(){
+    console.log(ratio.toFixed(2) + "test ratio and " + trueRatio.toFixed(2)+ " actual ratio");
+    var testRatio = ratio.toFixed(2);
+    var realRatio = trueRatio.toFixed(2);
+    var d = new Date();
+    var t = d.getTime();
+    console.log(trueRatio + " true ratio" + testRatio + " testRatio" + (parseFloat(trueRatio) + 0.02) + " plus 0.02");
+    if(t-lastClick>1000){
+        if (testRatio==realRatio){
+                //document.getElementById("message").innerHTML = "Correct in " + tries + " tries.";
+                document.getElementById("submit").classList.add("flashcorrect");
+                document.getElementById("message").innerHTML = "Good job!  Next round";
+                var rightSound = Math.floor(Math.random()*correctArray.length);
+                correctArray[rightSound].currentTime = 0;
+                correctArray[rightSound].play();
+                delay(correctArray[rightSound].duration*1000).then(() => {
+                    document.getElementById("stars").innerHTML += "&#9733";
+                    startGame()
+                });
+                console.log(correctArray[rightSound].duration+ " duration");                
+        }
+        
+        else if(testRatio<=(parseFloat(realRatio)+0.02)&&(testRatio>=(parseFloat(realRatio)-0.02))){
+            document.getElementById("message").innerHTML = "Close.  Check your rounding.";
+            var wrongSound = Math.floor(Math.random()*incorrectArray.length);
+            incorrectArray[wrongSound].currentTime = 0;
+            incorrectArray[wrongSound].play();
+            document.getElementById("submit").classList.add("flashwrong");
+        }
+        else{
+            document.getElementById("message").innerHTML = "Try again.  Use Shift to smooth out your scaling.  You may also use the arrow keys.";
+            var wrongSound = Math.floor(Math.random()*incorrectArray.length);
+            incorrectArray[wrongSound].currentTime = 0;
+            incorrectArray[wrongSound].play();
+            document.getElementById("submit").classList.add("flashwrong");
+        }
+        lastClick = t;
+    }
+>>>>>>> 713984f53d97fc18ab068f43e18a9cea0da9c8b6
 
 // function addListenForClear(){
 //     var place = document.getElementById("submit");
@@ -353,4 +384,23 @@ function drawEllipse(x,y,xRad,yRad){
 
 }
 
+<<<<<<< HEAD
 
+=======
+document.onkeydown = checkKey;
+
+function checkKey(e) {
+
+    e = e || window.event;
+
+    if (e.keyCode == '38') {
+        bumpGame(testRadius+=0.1);
+        updateRatio();
+    }
+    else if (e.keyCode == '40') {
+        bumpGame(testRadius-=0.1);
+        updateRatio();
+    }
+
+}
+>>>>>>> 713984f53d97fc18ab068f43e18a9cea0da9c8b6
