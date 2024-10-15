@@ -2,15 +2,11 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
-    overscroll-behavior-x: none;
+    background-color: black;
 }
 
 canvas{
-    position: absolute;
-    top: 0;
-    left: 0;
     overflow: hidden;
-    z-index: 0;
 }
 
 .ratio{
@@ -32,11 +28,7 @@ canvas{
 }
 
 img{
-    position:absolute;
-    top: 5%;
-    left: 5%;
-    width: 3%;
-    height: auto;
+    display: none;
 }
 
 @keyframes flashcorrect {
@@ -181,7 +173,6 @@ img{
     pointer-events: none;
 }
 
-<<<<<<< HEAD
 .container{
     font-size: 2rem;
     font-family: Arial;
@@ -203,28 +194,6 @@ img{
     z-index: 3;
 }
 
-input{
-    vertical-align: middle;
-}
 
-.show.label{
-    font-size: 2rem;
-    display: inline-block;
-    vertical-align: middle;
-    position: relative;
-    overflow: visible;
-    user-select: none;
-    caret-color: transparent;
-}
-
-input.scale-check {
-    transform : scale(1.3);
-    user-select: none;
-}
 
 input { position: fixed; top: 10px; left: 10px; color: white; width: 340px }
-=======
-#question-mark{
-    z-index:5;
-}
->>>>>>> 713984f53d97fc18ab068f43e18a9cea0da9c8b6

@@ -8,79 +8,23 @@ tmpCtx = tmpCanvas.getContext('2d');
 var img;
 
 var planets = [
-    ["Mercury", 4879, "#708090"],
-    ["Venus", 12104, "#c18f17"],
-    ["Earth", 12759, "#129f93"],
-    ["Mars", 6794, "#c1440e"],
-    ["Jupiter",142984, "#c99039"],
-    ["Saturn",120536, "#ceb8b8"],
-    ["Uranus",51118,"#afdbf5"],
-    ["Neptune",49528,"#3d5ef9"]
+    ["Mercury", 4879, "#708090",0.206],
+    ["Venus", 12104, "#c18f17",0.007],
+    ["Earth", 12759, "#129f93",0.017],
+    ["Mars", 6794, "#c1440e",0.093],
+    ["Jupiter",142984, "#c99039",0.048],
+    ["Saturn",120536, "#ceb8b8",0.054],
+    ["Uranus",51118,"#afdbf5",0.047],
+    ["Neptune",49528,"#3d5ef9",0.009]
 ]
 var testRadius = 100;
 var testDiameter = testRadius*2;
+var checkState = false;
 
 function drawBackground(){
     ctx.fillStyle = "black";
     ctx.fillRect(0,0,canvas.clientWidth,canvas.clientHeight);
 }
-
-// function loadImage (src) {
-//     var deferred = when.defer(),
-//         img = document.createElement('img');
-//     img.onload = function () { 
-//         deferred.resolve(img); 
-//     };
-//     img.onerror = function () { 
-//         deferred.reject(new Error('Image not found: ' + src));
-//     };
-//     img.src = src;
-
-//     // Return only the promise, so that the caller cannot
-//     // resolve, reject, or otherwise muck with the original deferred.
-//     return deferred.promise;
-// }
-
-// function loadImages(srcs) {
-//     // srcs = array of image src urls
-
-//     // Array to hold deferred for each image being loaded
-//     var deferreds = [];
-
-//     // Call loadImage for each src, and push the returned deferred
-//     // onto the deferreds array
-//     for(var i = 0, len = srcs.length; i < len; i++) {
-//         deferreds.push(loadImage(srcs[i]));
-
-//         // NOTE: We could push only the promise, but since this array never
-//         // leaves the loadImages function, it's ok to push the whole
-//         // deferred.  No one can gain access to them.
-//         // However, if this array were exposed (e.g. via return value),
-//         // it would be better to push only the promise.
-//     }
-
-//     // Return a new promise that will resolve only when all the
-//     // promises in deferreds have resolved.
-//     // NOTE: when.all returns only a promise, not a deferred, so
-//     // this is safe to expose to the caller.
-//     return when.all(deferreds);
-// }
-
-// loadImages(imageSrcArray).then(
-//     function gotEm(imageArray) {
-//         doFancyStuffWithImages(imageArray);
-//         return imageArray.length;
-//     },
-//     function doh(err) {
-//         handleError(err);
-//     }
-// ).then(
-//     function shout (count) {
-//         // This will happen after gotEm() and count is the value
-//         // returned by gotEm()
-//         alert('see my new ' + count + ' images?');
-//     }
-// );
 
 class Point {
     constructor(x,y){
@@ -89,7 +33,7 @@ class Point {
     }
 }
 
-var center = new Point(canvas.clientWidth/2,2*canvas.clientHeight/5);
+var center = new Point(canvas.clientWidth/2,canvas.clientHeight/2);
 
 function drawTestPlanet(rad,color){
     ctx.moveTo(center.x/2,center.y);
@@ -105,26 +49,26 @@ function drawTestPlanet(rad,color){
 var baseRadius = 80;
 var baseDiameter = 2*baseRadius;
 
-function drawBasePlanet(color){
-    ctx.moveTo(center.x/2,center.y);
-    ctx.save();
-    ctx.fillStyle = color;
-    ctx.strokeStyle = "purple";
-    ctx.shadowColor = '#000';
-    ctx.shadowBlur = 20;
-    ctx.shadowOffsetX = 5;
-    ctx.shadowOffsetY = 5;
-    ctx.beginPath();
-    ctx.arc(center.x-center.x/4,center.y,baseRadius,0,2*Math.PI, false);
-    ctx.closePath();
-    ctx.fill();
-    ctx.stroke();
-    ctx.restore();
-}
+// function drawBasePlanet(color){
+//     ctx.moveTo(center.x/2,center.y);
+//     ctx.save();
+//     ctx.fillStyle = color;
+//     ctx.strokeStyle = "purple";
+//     ctx.shadowColor = '#000';
+//     ctx.shadowBlur = 20;
+//     ctx.shadowOffsetX = 5;
+//     ctx.shadowOffsetY = 5;
+//     ctx.beginPath();
+//     ctx.ellipse(center.x-center.x/4,center.y,20,25,Math.PI/2,0,2*Math.PI);
+//     ctx.closePath();
+//     //ctx.fill();
+//     ctx.stroke();
+//     ctx.restore();
+// }
 
 function drawLine(from,to){
-    drawEndPoint(from);
-    drawEndPoint(to);
+    //drawEndPoint(from);
+    //drawEndPoint(to);
     ctx.strokeStyle = 'white';
     ctx.beginPath();
     ctx.moveTo(from.x,from.y);
@@ -132,42 +76,95 @@ function drawLine(from,to){
     ctx.closePath();
     ctx.stroke();
 }
+
+var emptyPos = new Point(canvas.width,canvas.height);
+var xDim = 10;
+
+function drawX(c,x,y){
+    emptyPos.x = x-2*c;
+    emptyPos.y = y;
+    
+    ctx.strokeStyle = 'white';
+    ctx.beginPath();
+    ctx.moveTo(x-2*c+xDim,y+xDim);
+    ctx.lineTo(x-2*c-xDim,y-xDim);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x-2*c+xDim,y-xDim);
+    ctx.lineTo(x-2*c-xDim,y+xDim);
+    ctx.closePath();
+    ctx.stroke();
+}
+
+var sun = new Point(center.x,center.y);
+var c = 0;
+var eccentricity = 0;
 var ratio;
+var startXRad = 300;
+var startYRad = 301;
 startGame();
 
-
-function drawEndPoint(pos){
-    ctx.fillStyle = "white";
-    ctx.strokeStyle = "blue";
+function drawSun(pos){
+    ctx.fillStyle = "yellow";
+    ctx.strokeStyle = "white";
     ctx.moveTo(pos.x,pos.y);
     ctx.beginPath();
     ctx.arc(pos.x,pos.y,10,0,2*Math.PI, false);
     ctx.fill();
     ctx.stroke();
     ctx.closePath();
+    //console.log("We drew it somewhere");
 }
 
-function bumpGame(rad){
-    if(rad<=0){
-        rad = 1;
-        testRadius = 1;
-        baseDiameter = rad*2;
-        testDiameter = testRadius*2;
+function drawPlanet(pos){
+    ctx.fillStyle = "blue";
+    ctx.strokeStyle = "white";
+    ctx.moveTo(pos.x,pos.y);
+    ctx.beginPath();
+    ctx.arc(pos.x,pos.y,6,0,2*Math.PI, false);
+    ctx.fill();
+    ctx.stroke();
+    ctx.closePath();
+    //console.log("We drew it somewhere");
+}
+
+
+function bumpGame(deltX,deltY){
+    startXRad += deltX;
+    startYRad += deltY;
+    if(startXRad > startYRad && !down){
+        startYRad = startXRad;
+    }
+    else if(startYRad < startXRad && down){
+        startXRad = startYRad;
     }
     drawBackground();
+<<<<<<< HEAD
     drawTestPlanet(rad,testPlanet[2]);
     drawBasePlanet(planet[2]); 
+=======
+    drawEllipse(center.x,center.y,startXRad,startYRad);
+    console.log(startXRad + " xrad, " + startYRad + " yrad");
+>>>>>>> d923a22f8bb5b0adee24c73bf5fa04fcba10cd8e
 }
 
+var down = false;
+var smooth = [0.01,0.1,1];
+var selector = 0;
+
 document.getElementById("space").addEventListener("wheel",function changePlanet(event){
-    if(event.shiftKey){
-        if(event.deltaY>0){bumpGame(testRadius+=0.5);}
-        else if(event.deltaY<0){bumpGame(testRadius-=0.5);}
+    
+    if(Math.abs(startYRad-startXRad)==0){
+        selector = 2;
     }
-    else{
-        if(event.deltaY>0){bumpGame(testRadius+=2);}
-        else if(event.deltaY<0){bumpGame(testRadius-=2);}
+    else if(Math.abs(startYRad-startXRad)<0.5){
+        selector = 0;
     }
+<<<<<<< HEAD
+    else if(Math.abs(startYRad-startXRad)<8){
+        selector = 1;
+=======
     updateRatio();
 });
 
@@ -175,12 +172,34 @@ function updateRatio(){
     ratio = testRadius/baseRadius;
     if(ratio>1){
         document.getElementById("ratio").innerHTML = testPlanet[0] + " is " + ratio.toFixed(2) + " times bigger than " + planet[0] + "?";
+>>>>>>> 713984f53d97fc18ab068f43e18a9cea0da9c8b6
     }
-    else if(ratio == 1){
-        document.getElementById("ratio").innerHTML = testPlanet[0] + " is " + ratio.toFixed(2) + " times the size of " + planet[0] + "?";
+    else{
+        selector = 2;
     }
-    else if(ratio < 1){
-        document.getElementById("ratio").innerHTML = testPlanet[0] + " is " + ratio.toFixed(2) + " times smaller than " + planet[0] + "?";
+    if(event.shiftKey){
+        if(event.deltaY>0){
+            down = false;
+            if(Math.abs(startYRad-startXRad)==0){selector=2;}
+            bumpGame(smooth[selector],0);
+        }
+        else if(event.deltaY<0){
+            down = true;
+            if(Math.abs(startYRad-startXRad)==0){selector=0;}
+            bumpGame(-1*smooth[selector],0);
+        }
+    }   
+    else{
+        if(event.deltaY>0){
+            down = false;
+            if(Math.abs(startYRad-startXRad)==0){selector=0;}
+            bumpGame(0,smooth[selector]);
+        }
+        else if(event.deltaY<0){
+            down = true;
+            if(Math.abs(startYRad-startXRad)==0){selector=2;}
+            bumpGame(0,-1*smooth[selector]);
+        }
     }
 }
 
@@ -189,59 +208,16 @@ var testPlanet;
 var trueRatio;
 
 function startGame(){
-    var rand = Math.floor(Math.random()*planets.length);
-    planet = planets[rand];
-    testPlanet = planet;
-    while(planet == testPlanet){
-        rand = Math.floor(Math.random()*planets.length);
-        testPlanet = planets[rand];
-    }
-
-    if(testPlanet[0]=="Jupiter"||testPlanet[0]=="Saturn"||testPlanet[0]=="Neptune"||testPlanet[0]=="Uranus"){
-        if(planet[0]=="Jupiter"||planet[0]=="Saturn"||planet[0]=="Neptune"||planet[0]=="Uranus"){
-            baseRadius = Math.floor(Math.random()*80+80); 
-        }
-        else{
-            if(planet[0]=="Mercury"||planet[0]=="Mars"){
-                baseRadius = Math.floor(Math.random()*15+15);
-            }
-            else{
-                baseRadius = Math.floor(Math.random()*30+30);
-            }
-        }
-    }
-    else{
-        baseRadius = Math.floor(Math.random()*80+80);
-    }
-    testRadius = Math.floor(Math.random()*80+80);
-    
-    console.log(testPlanet + " test and real: " + planet);
     drawBackground();
-    drawTestPlanet(testRadius,testPlanet[2]);
-    drawBasePlanet(planet[2]);
-
-    document.getElementById("test-planet-label").innerHTML = testPlanet[0];
-    document.getElementById("base-planet-label").innerHTML = planet[0];
-
-    ratio = testRadius/baseRadius;
-    if(ratio>1){
-        document.getElementById("ratio").innerHTML = testPlanet[0] + " is " + ratio.toFixed(2) + " times bigger than " + planet[0] + "?";
-    }
-    else if(ratio == 1){
-        document.getElementById("ratio").innerHTML = testPlanet[0] + " is " + ratio.toFixed(2) + " times the size of " + planet[0] + "?";
-    }
-    else if(ratio < 1){
-        document.getElementById("ratio").innerHTML = testPlanet[0] + " is " + ratio.toFixed(2) + " times smaller than " + planet[0] + "?";
-    }
-    trueRatio = testPlanet[1]/planet[1];
+    drawEllipse(center.x,center.y,startXRad,startYRad);
 }
 
 window.addEventListener('resize', function() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     center.x = canvas.width/2;
-    center.y = 2*canvas.height/5;
-    bumpGame(testRadius);
+    center.y = canvas.height/2;
+    bumpGame(0,0);
 }, true);
 
 var correctArray = [];
@@ -256,6 +232,16 @@ function loadArrays() {
 }
 loadArrays();
 
+<<<<<<< HEAD
+document.getElementById("show-empty").addEventListener("click", function(){
+    checkState = !checkState;
+    bumpGame(0,0);
+});
+
+// document.addEventListener("DOMContentLoaded", function(){
+//     addListenForClear();
+// });
+=======
 function score(){
     console.log(ratio.toFixed(2) + "test ratio and " + trueRatio.toFixed(2)+ " actual ratio");
     var testRatio = ratio.toFixed(2);
@@ -294,27 +280,118 @@ function score(){
         }
         lastClick = t;
     }
+>>>>>>> 713984f53d97fc18ab068f43e18a9cea0da9c8b6
 
-}
-
-document.addEventListener("DOMContentLoaded", function(){
-    addListenForClear();
-    startGame();
-});
-
-function addListenForClear(){
-    var place = document.getElementById("submit");
-    var clearIt = function() {
-       place.classList.remove("flashwrong");
-       place.classList.remove("flashcorrect");
-    };
-    place.addEventListener("animationend",clearIt);
-}
+// function addListenForClear(){
+//     var place = document.getElementById("submit");
+//     var clearIt = function() {
+//        place.classList.remove("flashwrong");
+//        place.classList.remove("flashcorrect");
+//     };
+//     place.addEventListener("animationend",clearIt);
+// }
 
 function delay(time) {
     return new Promise(resolve => setTimeout(resolve, time));
 }
 
+var planets = []
+planets.push(new Point(0,0));
+var hw = canvas.width/2;
+var hh = canvas.height/2;
+//ctx.transform(1, 0, 0, -1, hw, hh);
+// Ellipse dimension
+var semiMaj = startYRad;		// Semi major axis
+var semiMin = startXRad;		// Semi minor axis
+
+var widthBoundary = semiMaj-.001;	// Boundary for a
+var sign = 1;			// Sign of y co-ordinate
+var xi = -widthBoundary;		// x index
+var ellipseX, ellipseY;			// x and y coordinate on ellipse
+var velX = 0;			// x component of orbital velocity
+var gravity = 1;			// Gravitional parameter (M*6.67e-11)
+var orbPeriod = 2 * Math.PI * semiMaj**1.5 / gravity**0.5;		// Orbital period
+var timeSlice = orbPeriod / 1000;								// A slice of time
+
+var sqrtGuts;
+
+function next() {
+	window.requestAnimationFrame(next);
+    drawBackground();
+    drawEllipse(center.x,center.y,startXRad,startYRad);
+    orbPeriod = 2 * Math.PI * semiMaj**1.5 / gravity**0.5;		// Orbital period
+    timeSlice = orbPeriod / 1000;       // A slice of time
+    								
+    console.log(timeSlice + " timeSlice");
+
+    semiMaj = startYRad;		// Semi major axis
+    semiMin = startXRad;		// Semi minor axis
+    widthBoundary = semiMaj-.001;
+
+    console.log(xi + " xi before");
+
+	ctx.fillStyle = "skyblue";
+
+    console.log(ellipseX + " ellipseX before");
+
+	ellipseX = xi + velX * timeSlice;
+
+    console.log(ellipseX + " ellipseX after mult" + xi + " xi piece" + velX + " velX piece" + timeSlice + " timeSlice");
+	if(sign*ellipseX > widthBoundary) {
+		ellipseX = sign*widthBoundary;
+
+        console.log(ellipseX + " ellipseX after if");
+
+		sign = -sign;
+	}
+    sqrtGuts = 1 - ellipseX*ellipseX/semiMaj/semiMaj;
+    if((sqrtGuts)<0){
+        sqrtGuts = 0;
+    }
+	ellipseY = sign*semiMin * (sqrtGuts)**0.5;
+    console.log(ellipseY + " ellipseY after if");
+	velX = ellipseY/semiMin * (gravity*semiMaj/((ellipseX - c)**2 + ellipseY*ellipseY))**0.5;
+	xi = ellipseX;
+
+    console.log(velX + " velX before go round");
+
+    planets[0].x = ellipseX+center.x-c;
+    planets[0].y = ellipseY+center.y;
+    drawPlanet(planets[0]);
+}
+next();
+
+function drawEllipse(x,y,xRad,yRad){
+    c = Math.sqrt(Math.abs(xRad*xRad-yRad*yRad));
+    //sun.x=center.x+c;
+    ctx.moveTo(x,y);
+    ctx.save();
+    //ctx.fillStyle = color;
+    ctx.strokeStyle = "white";
+    ctx.shadowColor = '#000';
+    ctx.shadowBlur = 20;
+    ctx.shadowOffsetX = 5;
+    ctx.shadowOffsetY = 5;
+    ctx.beginPath();
+    ctx.ellipse(x-c,y,xRad,yRad,Math.PI/2,0,2*Math.PI);
+    ctx.closePath();
+    //ctx.fill();
+    ctx.stroke();
+    eccentricity = c/yRad;
+    document.getElementById("message").innerHTML = "eccentricity: " + eccentricity.toFixed(3);
+    ctx.restore();
+    sun.x = center.x;
+    sun.y = center.y;
+    drawSun(sun);
+    if(checkState){
+        drawX(c,x,y);
+    }
+
+}
+
+<<<<<<< HEAD
+
+=======
 document.onkeydown = checkKey;
 
 function checkKey(e) {
@@ -331,3 +408,4 @@ function checkKey(e) {
     }
 
 }
+>>>>>>> 713984f53d97fc18ab068f43e18a9cea0da9c8b6
