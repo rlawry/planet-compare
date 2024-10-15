@@ -140,13 +140,8 @@ function bumpGame(deltX,deltY){
         startXRad = startYRad;
     }
     drawBackground();
-<<<<<<< HEAD
-    drawTestPlanet(rad,testPlanet[2]);
-    drawBasePlanet(planet[2]); 
-=======
     drawEllipse(center.x,center.y,startXRad,startYRad);
     console.log(startXRad + " xrad, " + startYRad + " yrad");
->>>>>>> d923a22f8bb5b0adee24c73bf5fa04fcba10cd8e
 }
 
 var down = false;
@@ -161,10 +156,6 @@ document.getElementById("space").addEventListener("wheel",function changePlanet(
     else if(Math.abs(startYRad-startXRad)<0.5){
         selector = 0;
     }
-<<<<<<< HEAD
-    else if(Math.abs(startYRad-startXRad)<8){
-        selector = 1;
-=======
     updateRatio();
 });
 
@@ -172,7 +163,6 @@ function updateRatio(){
     ratio = testRadius/baseRadius;
     if(ratio>1){
         document.getElementById("ratio").innerHTML = testPlanet[0] + " is " + ratio.toFixed(2) + " times bigger than " + planet[0] + "?";
->>>>>>> 713984f53d97fc18ab068f43e18a9cea0da9c8b6
     }
     else{
         selector = 2;
@@ -232,16 +222,6 @@ function loadArrays() {
 }
 loadArrays();
 
-<<<<<<< HEAD
-document.getElementById("show-empty").addEventListener("click", function(){
-    checkState = !checkState;
-    bumpGame(0,0);
-});
-
-// document.addEventListener("DOMContentLoaded", function(){
-//     addListenForClear();
-// });
-=======
 function score(){
     console.log(ratio.toFixed(2) + "test ratio and " + trueRatio.toFixed(2)+ " actual ratio");
     var testRatio = ratio.toFixed(2);
@@ -280,7 +260,6 @@ function score(){
         }
         lastClick = t;
     }
->>>>>>> 713984f53d97fc18ab068f43e18a9cea0da9c8b6
 
 // function addListenForClear(){
 //     var place = document.getElementById("submit");
@@ -389,9 +368,6 @@ function drawEllipse(x,y,xRad,yRad){
 
 }
 
-<<<<<<< HEAD
-
-=======
 document.onkeydown = checkKey;
 
 function checkKey(e) {
@@ -408,4 +384,3 @@ function checkKey(e) {
     }
 
 }
->>>>>>> 713984f53d97fc18ab068f43e18a9cea0da9c8b6
