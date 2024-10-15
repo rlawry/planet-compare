@@ -260,7 +260,7 @@ function score(){
         }
         lastClick = t;
     }
-
+}
 // function addListenForClear(){
 //     var place = document.getElementById("submit");
 //     var clearIt = function() {
@@ -382,5 +382,5 @@ function checkKey(e) {
         bumpGame(testRadius-=0.1);
         updateRatio();
     }
-
 }
+
