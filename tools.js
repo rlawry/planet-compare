@@ -156,7 +156,7 @@ function bumpGame(rad){
     }
     drawBackground();
     drawTestPlanet(rad,testPlanet[2]);
-    drawBasePlanet(planet[2]);
+    drawBasePlanet(planet[2]); 
 }
 
 document.getElementById("space").addEventListener("wheel",function changePlanet(event){
